@@ -1,0 +1,20 @@
+select count(*) from empinfo where dept = "HR" group by dept;
+select CURDATE();
+select substring(fname,1,4) from empinfo;
+#create schema like the same of empinfo
+create table dup like empinfo;
+#inserting all values into dup
+insert into dup select * from empinfo;
+alter table emppos add column salary int;
+#info of employes btw 50k to 1l
+select empinfo.* from empinfo,emppos where emppos.empid = empinfo.id and emppos.salary in (select salary from emppos where salary between 50000 and 100000);
+select fname from empinfo where fname like 'S%';
+#query to fetch n records
+select * from empinfo limit 3;
+#query to fetch names
+select concat(fname, " ",lname) from empinfo;
+#fnames in upper case
+select upper(fname) from empinfo;
+#to get only the address without braces
+select substring_index(address,'(',1) from empinfo;
+select substring(address,1,position('(' in address)-1) from empinfo;
