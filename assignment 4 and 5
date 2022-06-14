@@ -1,0 +1,41 @@
+select count(*) from empinfo where dept = "HR" group by dept;
+select CURDATE();
+select substring(fname,1,4) from empinfo;
+#create schema like the same of empinfo
+create table dup like empinfo;
+#inserting all values into dup
+insert into dup select * from empinfo;
+alter table emppos add column salary int;
+#info of employes btw 50k to 1l
+select empinfo.* from empinfo,emppos where emppos.empid = empinfo.id and emppos.salary in (select salary from emppos where salary between 50000 and 100000);
+select fname from empinfo where fname like 'S%';
+#query to fetch n records
+select * from empinfo limit 3;
+#query to fetch names
+select concat(fname, " ",lname) from empinfo;
+#fnames in upper case
+select upper(fname) from empinfo;
+#to get only the address without braces
+select substring_index(address,'(',1) from empinfo;
+select substring(address,1,position('(' in address)-1) from empinfo;
+#has 5 char and ends with a
+select concat(fname," ",lname) from empinfo where lname like '____A';
+select * from empinfo where fname != 'Sanjay' and fname != 'Sonia';
+#managerial position
+select empinfo.* from empinfo,emppos where emppos.empos = 'manager' and emppos.empid = empinfo.id;
+select * from empinfo where address = "delhi(DEL)";
+select dept,count(dept) from empinfo group by dept order by dept ASC;
+#even and odd records
+select count(*) from empinfo where id%2 != 0;
+select count(*) from empinfo where id%2 = 0;
+select * from empinfo where exists(select empid from emppos);
+#last n records
+select * from empinfo order by id desc limit 3;
+#third highest
+select salary from emppos order by salary desc limit 2,1;
+(select * from empinfo order by id desc limit 1)
+union
+(select * from empinfo order by id asc limit 1) ;
+#count less than 2
+select dept from empinfo group by dept having count(*)<2;
+select empos,salary from emppos;
